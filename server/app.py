@@ -7,11 +7,11 @@ import numpy as np
 
 
 okt = Okt()
-stopwords = ['했습니다', '면서', '그리고', '하지만', '이다', '또']  # 여기에 불용어를 추가하면 됩니다.
+stopwords = ['했습니다', '면서', '그리고', '하지만', '이다', '또', '있는', '있다', '했다', '자', '이'] # 여기에 불용어를 추가하면 됩니다.
 
 def tokenize(text):
    tokens = okt.pos(text)
-   return [word for word, pos in tokens if pos != 'Josa' and word not in stopwords]  # 불용어 제거 추가
+   return [word for word, pos in tokens if pos != 'Josa' and word not in stopwords and len(word) > 1] # 불용어 제거 추가
 
    
 def Topic_Modeling(text):
@@ -30,7 +30,7 @@ def Topic_Modeling(text):
    indices = np.argsort(tfidf_matrix.toarray()).flatten()[::-1]
    features = vectorizer.get_feature_names_out()
    top_features = [features[i] for i in indices[:8]]
-   print(f"토픽 5개: {top_features}")
+   print(f"토픽 8개: {top_features}")
    
    return top_features
 
@@ -56,5 +56,4 @@ def home():
 
 if __name__ == '__main__':  
    app.run('0.0.0.0',port=5000,debug=True)
-   
    
