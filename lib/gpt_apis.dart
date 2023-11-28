@@ -1,0 +1,37 @@
+import 'dart:convert';
+
+import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
+
+const SESSION_TOKEN =
+    "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..1qX5NUlzLdS701Z9.o2GemB-Q2bqBOCevc0KjUbEyc1BAxqFqmgQbFCxhCrllwOfNw7dc7rqdVCmhiReRvPaBSXSe9HFQof-SKuWKI2P8pPatonmoEHX8zNPgLYFve54CjHtGLqMWHIQ4DL9yPhpmx3h-d_GLGnoP34u9B2K6C9_2Qfm8Uas5punPccYU9HryH5SGQvOdItT9vXWbXuQfkr2QjjJ-y93YdJAvDUUkzsAuX82KV_9BR9AN94Ap1SUlaYVTqNohZenGNZYNvsP-cRUlDMpcQNO_s_8Ho013TjKHdp7IWtFNZJ3JWse0HrJ3KDnx-lJx4Jf4WPYNJjrX-Z2UMxm0MTQKhX8dYOEN8kzPTUb1ele9gJkJRF00pv4_nNfEJoxcNzmhl97RJeZvyJIhlkcrXguWbwekZLMe_CW8UxHslraRNroKpU-bF2zE0fHFL9F_07gNrem3aJUFX6MVUkFCTaHpRoxV0Sx3f-BdSYRyNv7yCSulP9vyMWLC-RViKU-bSaNQTRMzx3nLLO-M0Pks3kp9pjBss4MpiIsHVc7m9Ga7x-c92FX3Yk2CeqmwQTMGnaURDg4gSfSHu-7q052PhluQmKKBKhzqZ8AmLfwA9cc8YTbJzJy7bUzubn9e9p55YV-x7i3SjFvnkSCSJ9XznD2mE1pAZUjhsYf8TN7zi0WgAruM_AiT_ibfZ-YE5PWQJqSDiUlkdccTimiWcs1iNiXPHk6Xr5TnOKcEC_wFP1MTztlzLwixTvAgmYgo25CAtSLYEwq1gG2voRXlhhpYsrshJUlo6ivcZNLwh9zqCyhS2rcAHRMVlfjkra4Bl--kqcF1Xszief1vMFgFtsknobu3ZxGYsE656NP9C_7512rk81qjmGyxBPiMj7lASxHOKRE5MUa8ngMqP5KZmZ_w4EACNhHZIN2rhvWTKDiOhWfSY6ynmvcce6PizDIK9iBVWWgeJJMPYTsJ7YRR_aZSxSI5bNqZODdhyjCP9ueOqdM2_0-pQ0H-d0_9LLwLDJ67ty4l0kKWZyiCR7_wgzTcR75kjwG1E-2xnzNCqOxB8MEljdc8422XJ_vJltqNF2qgsY3E8tWOoxBYmKotHya6R3XjPnV4CZ-oFUO_zifMprFi4oovQY5FLS3-_REML6L6DMTeHYT6_qvzp97Vu5KD5UaklunPZ8-MRccbTuSBqazkjMaJpYZMJTmrwyVtbnguPJ3sM1Z9Pz7hQvl5OkZ5TaMAQiEoaknv5yXK7KopD_ic0Fyp5uvMIUOceczfndqdNlDyqtepcqBuUdNvS8CC1D9W_wG3N7W3z_OY7crSZNAkD0REtf2ViQvZGkpuqr9CbwxqiL0FCkPcAl1bCWZ4zezLDXwdKfsqv7s1djTrOmetJ-hw9QrTfYJchhmYUAMTfXl9yDbpG8mQMF9UaLMgpIDPgsFwuZ3rbq2cL-iMIB-ARj3WLhmqJjSA_2rZFfbrLoTa9dxzK2knfzDZkSnLfxILlJFBQiVk2ZQa0gKOD9qQ7ZIpIhNgOS1d2uMmObeqkPgtk-jWcSkoUd-FyA6BJAs5xjO7rZTlPHFbgEZlGoI65v6rM1p1BGqrRRgj8xOtOhgKEWso5hPFY_4FWXLz_eiMIIf0Du8MCLxt6ldpkpr3tuV5TYeGTQEUoNB1Sopz6xZUCtzNGAkhoxZMBAsqN8dz8xowy-7S2l6SnXLU6FBekCu_aTt-3Gbxd1_pRayuFCAVzW6os3rfbIKN9ZhoFMnYRFyiHbG2ML1V0vTPa0y-tpEOwFtaJmS9hl-PFWaFcWq9ADj7AQeNtRbdabuSywBJ7TVjzKiKkaKoqtjrySB_FM1VRVB3KpcSMAV5uBuWcSrbXiUA7X_pCQ2Fe4Vj9iJL_jp9dFXW4hRhLhxnWWvAaHbH3SkJI7aMmKBO_WXngF_gJHXXsZWYfMculS0DVA-83U5bVhlGlNhZ3_-wc8thd6eVnkiiDD6z-g2sG1UlM9MDId1gDcXdXntde6aa4e3DY8KvO13DVYtWKAUvYG6AvmcAE7VweENAlkrpUJXg9sIgUu0wFX9RfsoB7nULTpYrrqAMwjuXrlmmWySjHuIYSxivC11hey2VocHBkrdas0MYr12ywwKij5rFf6_SFXX7_4SyrVSW6EunMHsE4EDaX93qxLgflVvqVoqhK2jJEUpeNVVTQsBvkS5Oz6ABTE3CcX-5yqxLU3rNhMnWssrDjJ63Tye7CEoxDDOGda50qmTdrGcF-BZIDnuAVgjCmQKYHkbus_KQ7cQHmDAwnI4BLDN0G5-5D2Cd97ua-xUmfsAzm1fRHjEFgmG3l6gL31S7dChnnPREOQpln4cQbX9SxpqF9gd-pX0T3Dd6v4Astba_E3HGdN381kFrPnpz63NQeMAlFZaOaf8RsApvpOuRnJcXkWmnTQxg2C_gKYmANzNPy6j046bIPgiK9a87RG-g5OlvQCh6mtGcxvyf3gpNU0m3H7Yy5AlwaBy5cp4UCQzyNjtrOL5BKnXzECRDz_aY24N7Owh8EPwg_prLQmhesSRFJbHHGmrb1UPeiCGQR5lvP4BqBshcrU4KPpo4sUQNlTD_rNlZpzm_xn0hXriO9Q5rQzM8OXtbMf_oJjzzRZG8YOfG17QMDzXttTdsfTWt19R9Uk2NaBdZdKDTpqElxCkRZCcM-_7evKPKh1p7WBhzN9V-8usK7IHIkLaa7v2uaKzsj6b6KlTIxB9lw9hwH1nKlBFtIrBlSdB1MvXqt03wUav2bjZz9icgi3TrOcd9HwAGrQmru1XG-XZxlcHguCJzJhtsQv5NvjbNk3lJcKSZeTGXNWZo_q11srMTNJvJRGMRYeGyQ998hwynTyyjEFb0CYu6ZyE33DmeZn46WpnMSPLORkEpT8IVCvhYNUEcIm1k_vQ1pBZdan6ylVTz-sNsMbybKPEAqlIfSIDKe7I.dO9dT_B-Rsn2j0C3TwoL2w";
+const CLEARANCE_TOKEN =
+    "2meTKMRUkRBQpEZOQBe2zk6xhWG2.Ajry1fOekRALbk-1700809057-0-1-937e7ed9.e492db05.82cecc54-0.2.1700809057";
+
+const token = " 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";
+const apiUrl = 'https://api.openai.com/v1/completions';
+final openAI = OpenAI.instance.build(
+    token: token,
+    baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
+    enableLog: true);
+
+Future<String> generateText(String prompt) async {
+  var http;
+  final response = await http.post(
+    Uri.parse(apiUrl),
+    headers: {'Content-Type': 'application/json', 'Authorization': token},
+    body: jsonEncode({
+      "model": "gpt-3.5-turbo",
+      'prompt': "$prompt 앞의 내용을 3줄로 요약해줘",
+      'max_tokens': 1000,
+      'temperature': 0,
+      'top_p': 1,
+      'frequency_penalty': 0,
+      'presence_penalty': 0
+    }),
+  );
+
+  Map<String, dynamic> newresponse =
+      jsonDecode(utf8.decode(response.bodyBytes));
+
+  return newresponse['choices'][0]['text'];
+}
