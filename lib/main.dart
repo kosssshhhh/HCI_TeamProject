@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hci_prototype/gpt_apis.dart';
 import 'package:hci_prototype/second_screen.dart';
 
 void main() {
@@ -57,7 +56,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _dialogBuilder(BuildContext context) {
-    final contentEditController = TextEditingController();
+    final contentEditController1 = TextEditingController();
+    final contentEditController2 = TextEditingController();
+    final contentEditController3 = TextEditingController();
 
     return showDialog(
         context: context,
@@ -67,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
             content: SizedBox(
               width: MediaQuery.of(context).size.width * 0.7,
               child: TextFormField(
-                controller: contentEditController,
+                controller: contentEditController1,
                 autofocus: true,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -78,13 +79,32 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             actions: [
+              Container(
+                width: 50,
+                height: 30,
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blue, width: 1)),
+                child: TextField(
+                  controller: contentEditController2,
+                ),
+              ),
+              Container(
+                width: 50,
+                height: 30,
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blue, width: 1)),
+                child: TextField(
+                  controller: contentEditController3,
+                ),
+              ),
               TextButton(
                   onPressed: () {
-                    generateText(contentEditController.text);
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => SecondScreen(
-                          text: contentEditController.text,
+                          text: contentEditController1.text,
+                          serviceType: contentEditController3.text,
+                          textType: contentEditController2.text,
                         ),
                       ),
                     );

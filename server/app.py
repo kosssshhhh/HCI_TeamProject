@@ -1,10 +1,9 @@
-from flask import Flask, request, jsonify, render_template
 import re
+
+import numpy as np
+from flask import Flask, jsonify, render_template, request
 from konlpy.tag import Okt
 from sklearn.feature_extraction.text import TfidfVectorizer
-import numpy as np
-
-
 
 okt = Okt()
 stopwords = ['했습니다', '면서', '그리고', '하지만', '이다', '또', '있는', '있다', '했다', '자', '이'] # 여기에 불용어를 추가하면 됩니다.
