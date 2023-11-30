@@ -57,11 +57,15 @@ class _SecondScreenState extends State<SecondScreen> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.65,
               child: SingleChildScrollView(
-                child: TextHighlighterScreen(
-                  inputText: widget.text,
-                  keywords: keywordDescription,
-                ),
-              ),
+                  child: widget.serviceType != "1"
+                      ? TextHighlighterScreen(
+                          inputText: widget.text,
+                          keywords: keywordDescription,
+                        )
+                      : Center(
+                          child: Text(widget.text,
+                              style: const TextStyle(fontSize: 20)),
+                        )),
             ),
             Container(
                 width: MediaQuery.of(context).size.width * 0.3,
